@@ -3,40 +3,35 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(jsonResponse => process(jsonResponse))
 })
-let birdName
-let birdSpecies
-let birdLat
-let birdLong
 
-let body = document.querySelector('body')
-let container = document.createElement('div')
-let birdNameEl = document.createElement('h2')
-let birdSpeciesEl = document.createElement('h3')
-let birdLocation = document.createElement('p')
-
-container.id = 'container'
-birdNameEl.id = 'bird-name'
-birdSpeciesEl.id = 'bird-species'
-birdLocation.id = 'last-seen'
-
-body.appendChild(container)
 
 const process = (arrayOfObjects) => {
-  for (let x of arrayOfObjects) {
-    
-    birdName = x.bird.name
-    birdSpecies = x.bird.species
-    birdLat = x.location.latitude
-    birdLong = x.location.longitude
+  for (let x in arrayOfObjects) {
+    let container = document.createElement('div')
+    let birdNameEl = document.createElement('h2')
+    let birdSpeciesEl = document.createElement('h3')
+    let birdLocation = document.createElement('p')
+
+    container.id = 'container'
+    birdNameEl.id = 'bird-name'
+    birdSpeciesEl.id = 'bird-species'
+    birdLocation.id = 'last-seen'
+
+    let newBird = arrayOfObjects[x]
+    let birdName = newBird.bird.name
+    let birdSpecies = newBird.bird.species
+    let birdLat = newBird.location.latitude
+    let birdLong = newBird.location.longitude
 
     birdNameEl.innerText = `Name: ${birdName}`
     birdSpeciesEl.innerText = `Species: ${birdSpecies}`
     birdLocation.innerText = `Last seen at ${birdLat}, ${birdLong}`
 
     container.appendChild(birdNameEl)
-    birdNameEl.appendChild(birdSpeciesEl)
-    birdNameEl.appendChild(birdLocation)
+    container.appendChild(birdSpeciesEl)
+    container.appendChild(birdLocation)
+    body.appendChild(container)
   }
 }
 
-
+let body = document.querySelector('body')
